@@ -1,5 +1,10 @@
 <template>
-    <div>
-        <CommonBlob />
+    <div class="h-screen">
+        <CommonHeader />
+        <NuxtLayout>
+            <NuxtPage />
+        </NuxtLayout>
+        <CommonFooter />
+        <CommonBg />
     </div>
 </template>

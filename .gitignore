@@ -22,3 +22,7 @@ logs
 .env
 .env.*
 !.env.example
+
+audio-distortion.vst3/*
+input.mp3
+output.mp3
