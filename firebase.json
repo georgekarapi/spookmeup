@@ -8,15 +8,16 @@
             "source": "functions",
             "codebase": "default",
             "ignore": ["venv", ".git", "firebase-debug.log", "firebase-debug.*.log", "*.local"]
-        }
+        },
+        { "source": ".output/server" }
     ],
     "hosting": {
         "public": ".output/public",
-        "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+        "cleanUrls": true,
         "rewrites": [
             {
                 "source": "**",
-                "destination": "/index.html"
+                "function": "server"
             }
         ]
     },

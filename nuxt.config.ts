@@ -2,7 +2,6 @@
 export default defineNuxtConfig({
     compatibilityDate: '2024-04-03',
     css: ['@/assets/styles/app.scss'],
-    ssr: false,
     vite: {
         css: {
             preprocessorOptions: {
@@ -15,11 +14,11 @@ export default defineNuxtConfig({
     colorMode: {
         preference: 'light'
     },
-    hooks: {
-        'prerender:routes'({ routes }) {
-            routes.clear() // Do not generate any routes (except the defaults)
-        }
-    },
     devtools: { enabled: true },
-    modules: ['@nuxt/ui', '@nuxtjs/tailwindcss', '@nuxt/icon']
+    modules: ['@nuxt/ui', '@nuxtjs/tailwindcss', '@nuxt/icon'],
+    nitro: {
+        firebase: {
+            gen: 2
+        }
+    }
 })
