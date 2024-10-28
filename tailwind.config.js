@@ -33,6 +33,9 @@ export default {
                     900: '#752919',
                     950: '#3f120b'
                 }
+            },
+            lineHeight: {
+                default: '1rem'
             }
         }
     },

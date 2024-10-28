@@ -2,8 +2,8 @@
     <div class="text-center text-white">
         <Icon v-if="icon" :name="icon" size="2em" class="my-1" />
         <div>
-            <div class="font-medium text-xl">{{ header }}</div>
-            <div>{{ subheader }}</div>
+            <div v-if="header" class="font-medium text-xl">{{ header }}</div>
+            <div v-if="subheader">{{ subheader }}</div>
         </div>
     </div>
 </template>
@@ -11,7 +11,7 @@
 defineProps({
     header: {
         type: String,
-        required: true
+        default: ''
     },
     subheader: {
         type: String,
