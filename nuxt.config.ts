@@ -12,6 +12,8 @@ export default defineNuxtConfig({
         }
     },
     runtimeConfig: {
+        storachaKey: process.env.STORACHA_KEY,
+        storachaProof: process.env.STORACHA_PROOF,
         public: {
             apiBaseUrl: process.env.API_BASE_URL,
             ipfsHash: process.env.IPFS_HASH

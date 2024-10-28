@@ -21,7 +21,7 @@
                         />
                         <UModal v-model="isUploading" prevent-close fullscreen>
                             <div class="max-w-[400px] m-auto p-4">
-                                <div v-if="!spookyFileUrl" class="text-white mb-4">Generating preview...</div>
+                                <div v-if="!spookyFileUrl" class="text-white mb-4">Generating Spooky version...</div>
                                 <div v-else class="text-white mb-4">Upload in progress...</div>
                                 <UProgress animation="carousel" />
                             </div>
@@ -103,7 +103,7 @@ const toggleConsentModal = () => {
 const isDone = ref(false)
 
 const spookyText = computed(() => {
-    return isDone.value ? '👻 Congratulations! 👻' : '👇 Your Spooky preview in Ready! 👇'
+    return isDone.value ? '👻 Congratulations! 👻' : '👇 Your Spooky version is Ready! 👇'
 })
 
 const spookyBtn = computed(() => {
@@ -118,7 +118,7 @@ const spookMeUp = async (isSpooky = false) => {
     if (originalFile.value) {
         formdata.append('file', originalFile.value, originalFile.value.name)
         try {
-            const res = await $fetch(config.public.apiBaseUrl + (isSpooky ? '/upload' : '/spookmeup'), {
+            const res = await $fetch(isSpooky ? '/api/upload' : `${config.public.apiBaseUrl}/spookmeup`, {
                 method: 'POST',
                 body: formdata,
                 onResponseError: ({ response }) => {

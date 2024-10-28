@@ -3,9 +3,6 @@
         <div class="w-full">
             <div class="text-white pb-8 text-center pt-2 truncate">{{ header }}</div>
             <AudioPlayer :src="src" />
-            <div v-if="isPreview" class="text-white font-thin text-center">
-                **The final version will be full length**
-            </div>
         </div>
         <UButton icon="i-mdi-arrow-right" trailing block @click="$emit('submit')">{{ btnText }}</UButton>
     </div>
