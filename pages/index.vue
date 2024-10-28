@@ -1,8 +1,26 @@
 <template>
     <div class="flex justify-center items-center h-full mt-28">
         <div class="bg-vulcan-950/95 w-96 h-[400px] rounded-xl p-4 flex justify-center items-center">
-            <div class="flex flex-col justify-center items-center gap-4">
+            <AudioDropzone v-if="isConnected" :is-empty="!!computedSrc" @drop.prevent="fileSelected" class="p-3">
+                <div class="mt-16">
+                    <div v-if="!dropzoneFile" class="flex flex-col justify-center items-center gap-4">
+                        <CommonStepperText
+                            icon="ic:baseline-audio-file"
+                            header="Step 1"
+                            subheader="Upload the sound you want to turn Spookier!"
+                        />
+                        <input type="file" ref="file" accept="audio/mpeg" @change="fileSelected" hidden />
+                        <UButton @click="$refs.file.click()">Upload sound</UButton>
+                    </div>
+                    <div v-else-if="computedSrc">
+                        <AudioPlayer :src="computedSrc" />
+                        <UButton icon="i-mdi-arrow-right" trailing block>Spook IT Up! (0/3)</UButton>
+                    </div>
+                </div>
+            </AudioDropzone>
+            <div v-else class="flex flex-col justify-center items-center gap-4">
                 <CommonStepperText icon="ic:baseline-login" subheader="Connect your wallet to start" />
+                <w3m-button />
             </div>
         </div>
     </div>
