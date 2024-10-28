@@ -52,22 +52,6 @@ def spookmeup(req: https_fn.Request) -> https_fn.Response:
         request_file = req.files.get('file')
         file_checks(request_file)
 
-        output_audio_data = apply_effects(request_file, True)
-        response = output_audio_data.read()
-
-        return https_fn.Response(response, status=200, content_type='audio/mpeg')
-
-    except Exception as e:
-        print(e)
-        return https_fn.Response("Error processing audio", status=500)
-
-
-@https_fn.on_request()
-def upload(req: https_fn.Request) -> https_fn.Response:
-    try:
-        request_file = req.files.get('file')
-        file_checks(request_file)
-
         output_audio_data = apply_effects(request_file, False)
         response = output_audio_data.read()
 
@@ -76,3 +60,19 @@ def upload(req: https_fn.Request) -> https_fn.Response:
     except Exception as e:
         print(e)
         return https_fn.Response("Error processing audio", status=500)
+
+
+# @https_fn.on_request()
+# def upload(req: https_fn.Request) -> https_fn.Response:
+#     try:
+#         request_file = req.files.get('file')
+#         file_checks(request_file)
+
+#         output_audio_data = apply_effects(request_file, False)
+#         response = output_audio_data.read()
+
+#         return https_fn.Response(response, status=200, content_type='audio/mpeg')
+
+#     except Exception as e:
+#         print(e)
+#         return https_fn.Response("Error processing audio", status=500)
