@@ -15,6 +15,11 @@ export default defineNuxtConfig({
     colorMode: {
         preference: 'light'
     },
+    hooks: {
+        'prerender:routes'({ routes }) {
+            routes.clear() // Do not generate any routes (except the defaults)
+        }
+    },
     devtools: { enabled: true },
     modules: ['@nuxt/ui', '@nuxtjs/tailwindcss', '@nuxt/icon']
 })
