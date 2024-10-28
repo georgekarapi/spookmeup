@@ -11,6 +11,12 @@ export default defineNuxtConfig({
             }
         }
     },
+    runtimeConfig: {
+        public: {
+            apiBaseUrl: process.env.API_BASE_URL,
+            ipfsHash: process.env.IPFS_HASH
+        }
+    },
     colorMode: {
         preference: 'light'
     },

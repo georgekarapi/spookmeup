@@ -22,6 +22,16 @@ export default defineAppConfig({
                 lg: 'px-4 py-[9px]',
                 xl: 'px-4 py-[9px]'
             }
+        },
+        modal: {
+            overlay: {
+                base: 'fixed inset-0 transition-opacity',
+                background: 'bg-gray-800/75'
+            },
+            background: 'bg-gray-800/75'
+        },
+        checkbox: {
+            label: 'text-sm font-medium text-white'
         }
     }
 })

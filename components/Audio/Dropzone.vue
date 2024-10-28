@@ -1,6 +1,6 @@
 <template>
     <div
-        class="opacity-85 rounded-xl h-full py-4"
+        class="opacity-85 rounded-xl h-full w-full py-4"
         @dragenter.prevent="toggleActive"
         @dragleave.prevent="toggleActive"
         @drop.prevent="toggleActive"
