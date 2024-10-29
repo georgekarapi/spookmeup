@@ -9,11 +9,19 @@ export default defineNuxtConfig({
                     silenceDeprecations: ['legacy-js-api']
                 }
             }
-        },
-        build: {
-            rollupOptions: {
-                external: ['cbw-sdk']
-            }
+        }
+    },
+    hooks: {
+        'nitro:build:before': nitro => {
+            nitro.hooks.hook('compiled', async () => {
+                const fs = await import('fs')
+                const path = await import('path')
+                const outputPath = path.join(nitro.options.output.serverDir, 'package.json')
+                const packageJson = JSON.parse(fs.readFileSync(outputPath, 'utf-8'))
+                packageJson.dependencies['cbw-sdk'] = 'npm:@coinbase/wallet-sdk@3.9.3'
+
+                fs.writeFileSync(outputPath, JSON.stringify(packageJson, null, 2))
+            })
         }
     },
     runtimeConfig: {
