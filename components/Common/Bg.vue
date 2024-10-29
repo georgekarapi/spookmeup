@@ -9,7 +9,7 @@
     z-index: -1;
     height: 100vh;
     width: 100vw;
-    background-image: url('@/assets/images/bg.webp');
+    background-image: url('assets/images/bg.webp');
     height: 100vh;
     background-size: cover;
     background-position: center;

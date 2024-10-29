@@ -9,6 +9,11 @@ export default defineNuxtConfig({
                     silenceDeprecations: ['legacy-js-api']
                 }
             }
+        },
+        build: {
+            rollupOptions: {
+                external: ['cbw-sdk']
+            }
         }
     },
     runtimeConfig: {
@@ -26,7 +31,8 @@ export default defineNuxtConfig({
     modules: ['@nuxt/ui', '@nuxtjs/tailwindcss', '@nuxt/icon'],
     nitro: {
         firebase: {
-            gen: 2
+            gen: 2,
+            nodeVersion: '20'
         }
     }
 })

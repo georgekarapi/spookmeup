@@ -1,6 +1,7 @@
 import io
 from pydub import AudioSegment
-from pedalboard import Pedalboard, load_plugin
+from pedalboard import Pedalboard, Chorus, PitchShift, Distortion, Compressor
+import numpy as np
 from pedalboard.io import AudioFile
 from firebase_functions import https_fn
 # from firebase_admin import initialize_app
@@ -21,12 +22,30 @@ def apply_effects(request_file: bytes, is_preview):
         samplerate = f.samplerate
         num_channels = f.num_channels
 
-    plugin = load_plugin("libs/audio-distortion.vst3")
-    plugin.tooth = -28
-    plugin.aether = 828
-    pedalboard = Pedalboard([plugin])
-
-    effected = pedalboard(audio, samplerate)
+    effects = [
+        Chorus(
+            rate_hz=0.6,
+            depth=3.0,
+            centre_delay_ms=0,
+            feedback=0.6,
+            mix=0.5
+        ),
+        Distortion(
+            drive_db=16  # 10
+        ),
+        PitchShift(
+            semitones=-5 + np.random.randint(-2, 2)
+        ),
+        Compressor(
+            threshold_db=-85,
+            ratio=1,
+            attack_ms=1,
+            release_ms=200
+        )
+    ]
+    board = Pedalboard(effects)
+    effected = board(audio, samplerate)
+    effected = effected / np.max(np.abs(effected))
 
     output_audio_data = io.BytesIO()
     with AudioFile(output_audio_data, "w", samplerate, num_channels=num_channels, format="mp3") as f:

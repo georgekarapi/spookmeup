@@ -6,10 +6,14 @@
     "functions": [
         {
             "source": "functions",
-            "codebase": "default",
+            "codebase": "python",
             "ignore": ["venv", ".git", "firebase-debug.log", "firebase-debug.*.log", "*.local"]
         },
-        { "source": ".output/server" }
+        {
+            "source": ".output/server",
+            "codebase": "server",
+            "runtime": "nodejs20"
+        }
     ],
     "hosting": {
         "public": ".output/public",
