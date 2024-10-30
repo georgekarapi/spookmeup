@@ -19,8 +19,10 @@ export default defineNuxtConfig({
                 const outputPath = path.join(nitro.options.output.serverDir, 'package.json')
                 const packageJson = JSON.parse(fs.readFileSync(outputPath, 'utf-8'))
                 packageJson.dependencies['cbw-sdk'] = 'npm:@coinbase/wallet-sdk@3.9.3'
-
                 fs.writeFileSync(outputPath, JSON.stringify(packageJson, null, 2))
+
+                const npmrcPath = path.join(nitro.options.output.serverDir, '.npmrc')
+                fs.writeFileSync(npmrcPath, 'legacy-peer-deps=true')
             })
         }
     },
