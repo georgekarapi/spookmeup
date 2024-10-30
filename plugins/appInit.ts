@@ -25,9 +25,9 @@ const initReownAppKit = () => {
 
     const metadata = {
         name: 'SpookMeUp',
-        description: 'AppKit Example',
-        url: 'https://reown.com/appkit',
-        icons: ['https://assets.reown.com/reown-profile-pic.png']
+        description: 'Turn sounds spookier!',
+        url: 'https://spookmeup.com',
+        icons: ['https://spookmeup.com/logo.png']
     }
 
     const networks: [AppKitNetwork] = [mainnet]
