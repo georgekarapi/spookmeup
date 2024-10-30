@@ -46,13 +46,12 @@ export default defineNuxtConfig({
     devtools: { enabled: true },
     modules: ['@nuxt/ui', '@nuxtjs/tailwindcss', '@nuxt/icon'],
     nitro: {
+        replace: {
+            [`functions.https.onRequest`]: `functions.region('europe-west3').https.onRequest`
+        },
         firebase: {
             gen: 2,
-            nodeVersion: '20',
-            httpsOptions: {
-                region: 'europe-west3',
-                maxInstances: 3
-            }
+            nodeVersion: '20'
         }
     }
 })

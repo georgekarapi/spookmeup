@@ -4,8 +4,11 @@ from pedalboard import Pedalboard, Chorus, PitchShift, Distortion, Compressor
 import numpy as np
 from pedalboard.io import AudioFile
 from firebase_functions import https_fn
-from firebase_functions import region
-# from firebase_admin import initialize_app
+from firebase_admin import initialize_app
+import firebase_functions.options as options
+
+initialize_app()
+options.set_global_options(region="europe-west3", memory=512, timeout_sec=90)
 
 
 def apply_effects(request_file: bytes, is_preview):
@@ -63,7 +66,7 @@ def file_checks(request_file):
         return https_fn.Response("File too large", status=400)
 
 
-@https_fn.on_request(region='europe-west3')
+@https_fn.on_request()
 def spookmeup(req: https_fn.Request) -> https_fn.Response:
     try:
         request_file = req.files.get('file')
