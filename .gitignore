@@ -26,3 +26,6 @@ logs
 audio-distortion.vst3/*
 input.mp3
 output.mp3
+*.ipynb
+proof.txt
+.firebase/*

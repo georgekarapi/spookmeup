@@ -1,6 +1,6 @@
 <template>
     <div class="flex justify-center items-center h-full">
-        <CommonCard class="w-96 h-[400px] mt-20">
+        <CommonCard class="w-96 h-[400px] mt-20 flex justify-center items-center">
             <AudioDropzone v-if="isConnected" :is-empty="!!originalFileUrl" @drop.prevent="fileSelected" class="p-3">
                 <div class="h-full">
                     <div v-if="!originalFile" class="pt-16 flex flex-col justify-center items-center gap-4">
@@ -40,18 +40,18 @@
                             :src="spookyFileUrl"
                             :header="spookyText"
                             :btn-text="spookyBtn"
-                            @submit="toggleConsentModal"
+                            @submit="isDone ? goToUpload() : toggleConsentModal()"
                         />
                     </div>
                 </div>
             </AudioDropzone>
             <div v-else class="flex flex-col justify-center items-center gap-4">
                 <CommonStepperText icon="ic:baseline-login" subheader="Connect your wallet to start" />
-                <w3m-button />
+                <w3m-connect-button />
             </div>
         </CommonCard>
         <UModal v-model="isConsentOpen" fullscreen>
-            <AudioConsent @submit="spookMeUp(true)" />
+            <AudioConsent @submit="fileName => spookMeUp(true, fileName)" />
         </UModal>
     </div>
 </template>
@@ -64,6 +64,7 @@ const config = useRuntimeConfig()
 
 const isConsentOpen = ref(false)
 const fileInput = ref<File | null>(null)
+const uploadedCid = ref<string | null>(null)
 
 const isUploading = ref(false)
 const originalFile = ref<File | null>(null)
@@ -94,6 +95,8 @@ const resetFields = () => {
     originalFile.value = null
     spookyFile.value = null
     fileInput.value = null
+    isDone.value = false
+    uploadedCid.value = null
 }
 
 const toggleConsentModal = () => {
@@ -109,14 +112,21 @@ const spookyText = computed(() => {
 const spookyBtn = computed(() => {
     return isDone.value ? 'Go to Uploads' : 'Finalize & Upload'
 })
-const spookMeUp = async (isSpooky = false) => {
+
+const goToUpload = () => {
+    navigateTo({ path: '/uploads', query: { cid: uploadedCid.value } })
+}
+const spookMeUp = async (isSpooky = false, fileName?: string) => {
     if (isSpooky && isConsentOpen.value) {
         toggleConsentModal()
     }
-    isUploading.value = true
-    const formdata = new FormData()
-    if (originalFile.value) {
-        formdata.append('file', originalFile.value, originalFile.value.name)
+    const fileToUpload = isSpooky ? spookyFile : originalFile
+    if (fileToUpload.value) {
+        isUploading.value = true
+        const formdata = new FormData()
+        const fileToUpload = isSpooky ? spookyFile : originalFile
+        const file = new File([fileToUpload.value!], fileName || 'no-name-spooky', { type: fileToUpload.value!.type })
+        formdata.append('file', file)
         try {
             const res = await $fetch(isSpooky ? '/api/upload' : `${config.public.apiBaseUrl}/spookmeup`, {
                 method: 'POST',
@@ -128,6 +138,7 @@ const spookMeUp = async (isSpooky = false) => {
                     if (response.ok) {
                         if (isSpooky) {
                             isDone.value = true
+                            uploadedCid.value = response._data
                         } else {
                             spookyFile.value = response._data
                         }

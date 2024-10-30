@@ -1,33 +1,15 @@
 <template>
     <CommonCard>
+        <div class="text-white text-2xl mb-4">Community Uploads</div>
         <div v-for="upload in uploadList" class="w-full mb-4">
-            <div class="text-white mb-2">{{ upload.name.split('.mp3')[0] }}</div>
-            <audio :src="upload.src" controls class="w-full" />
+            <div class="mb-2">
+                <a class="text-white" :href="upload.src" target="_blank">{{ upload.name.split('.mp3')[0] }}</a>
+            </div>
+            <audio :src="upload.src" controls class="w-full" preload="auto" />
         </div>
     </CommonCard>
 </template>
 <script setup lang="ts">
-import { createHeliaHTTP } from '@helia/http'
-import { unixfs } from '@helia/unixfs'
-import { CID } from 'multiformats/cid'
-
-const config = useRuntimeConfig()
-
-const uploadList = ref<any[]>([])
-
-const fetchUploads = async () => {
-    const ipfsHash = config.public.ipfsHash
-    const helia = await createHeliaHTTP()
-    const fs = unixfs(helia)
-    const uploads = []
-
-    for await (const entry of fs.ls(CID.parse(ipfsHash))) {
-        console.log(entry)
-        uploads.push({ name: entry.name, src: `https://${ipfsHash}.ipfs.w3s.link/${entry.name}` })
-    }
-
-    uploadList.value = uploads
-}
-
-fetchUploads()
+const route = useRoute()
+const { data: uploadList } = useFetch(`/api/fetchUploads?cid=${route.query.cid}`)
 </script>

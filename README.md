@@ -1,75 +1,23 @@
-# Nuxt 3 Minimal Starter
+[![Nuxt banner](./assets/images/banner.png)](https://spookmeup.com)
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+# SpookMeUp
 
-## Setup
+Making and sharing scary selfmade sounds for games, music, or just freaking out your friends.
+Jump in and SpookTHEMUp! 👻
 
-Make sure to install the dependencies:
+### Table of Contents
 
-```bash
-# npm
-npm install
+-   🚀 [Getting Started](#getting-started)
 
-# pnpm
-pnpm install
+---
 
-# yarn
-yarn install
+## <a name="getting-started">🚀 Getting Started</a>
 
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
+Use the following commands to run the project locally:
 
 ```bash
-# npm
+git clone https://github.com/georgekarapi/spookmeup
+cd spookmeup
+npm i
 npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.

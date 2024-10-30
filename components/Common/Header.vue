@@ -3,9 +3,9 @@
         <NuxtLink to="/">
             <img src="assets/images/logo.png" class="max-w-40" />
         </NuxtLink>
-        <div class="flex items-center gap-6 ml-auto">
+        <div class="flex items-center gap-4 ml-auto">
             <NuxtLink to="/uploads" class="text-white">Uploads</NuxtLink>
-            <w3m-button class="ml-auto" />
+            <w3m-button class="ml-auto" balance="hide" />
         </div>
     </header>
 </template>

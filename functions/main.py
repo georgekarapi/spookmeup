@@ -30,9 +30,6 @@ def apply_effects(request_file: bytes, is_preview):
             feedback=0.6,
             mix=0.5
         ),
-        Distortion(
-            drive_db=16  # 10
-        ),
         PitchShift(
             semitones=-5 + np.random.randint(-2, 2)
         ),
@@ -44,7 +41,7 @@ def apply_effects(request_file: bytes, is_preview):
         )
     ]
     board = Pedalboard(effects)
-    effected = board(audio, samplerate)
+    effected = board(audio, samplerate, reset=False)
     effected = effected / np.max(np.abs(effected))
 
     output_audio_data = io.BytesIO()

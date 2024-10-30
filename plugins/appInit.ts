@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app'
 
-import { createAppKit, useAppKitAccount } from '@reown/appkit/vue'
+import { createAppKit } from '@reown/appkit/vue'
 import { WagmiProvider } from 'wagmi'
 import { mainnet } from '@reown/appkit/networks'
 import type { AppKitNetwork } from '@reown/appkit/networks'

@@ -13,25 +13,31 @@ export default defineNuxtConfig({
     },
     hooks: {
         'nitro:build:before': nitro => {
-            nitro.hooks.hook('compiled', async () => {
-                const fs = await import('fs')
-                const path = await import('path')
-                const outputPath = path.join(nitro.options.output.serverDir, 'package.json')
-                const packageJson = JSON.parse(fs.readFileSync(outputPath, 'utf-8'))
-                packageJson.dependencies['cbw-sdk'] = 'npm:@coinbase/wallet-sdk@3.9.3'
-                fs.writeFileSync(outputPath, JSON.stringify(packageJson, null, 2))
+            if (process.env.NODE_ENV !== 'development') {
+                nitro.hooks.hook('compiled', async () => {
+                    const fs = await import('fs')
+                    const path = await import('path')
+                    const outputPath = path.join(nitro.options.output.serverDir, 'package.json')
+                    const packageJson = JSON.parse(fs.readFileSync(outputPath, 'utf-8'))
+                    packageJson.dependencies['cbw-sdk'] = 'npm:@coinbase/wallet-sdk@3.9.3'
+                    fs.writeFileSync(outputPath, JSON.stringify(packageJson, null, 2))
 
-                const npmrcPath = path.join(nitro.options.output.serverDir, '.npmrc')
-                fs.writeFileSync(npmrcPath, 'legacy-peer-deps=true')
-            })
+                    const npmrcPath = path.join(nitro.options.output.serverDir, '.npmrc')
+                    fs.writeFileSync(npmrcPath, 'legacy-peer-deps=true')
+                })
+            }
+        }
+    },
+    vue: {
+        compilerOptions: {
+            isCustomElement: tag => tag.startsWith('w3m-')
         }
     },
     runtimeConfig: {
-        storachaKey: process.env.STORACHA_KEY,
-        storachaProof: process.env.STORACHA_PROOF,
+        storachaKey: '',
+        storachaProof: '',
         public: {
-            apiBaseUrl: process.env.API_BASE_URL,
-            ipfsHash: process.env.IPFS_HASH
+            apiBaseUrl: ''
         }
     },
     colorMode: {
