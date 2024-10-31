@@ -8,3 +8,9 @@
         <CommonBg />
     </div>
 </template>
+<script setup lang="ts">
+useSeoMeta({
+    title: 'SpookMeUp',
+    description: 'Turn sounds spookier!'
+})
+</script>
