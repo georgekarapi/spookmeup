@@ -14,12 +14,10 @@ export default defineEventHandler(async event => {
 
         const blob = new Blob([file.data], { type: file.type })
         const baseFileName = file.name?.replace('.mp3', '') || ''
-        console.log(baseFileName, { type: file.type })
         const fileName =
             baseFileName && baseFileName !== 'file' ? `${baseFileName}.mp3` : `${generateSpookyFileName()}.mp3`
-        console.log(fileName, { type: file.type })
-        const fileToUpload = new File([blob], fileName, { type: file.type })
-        const fileCid = await client.uploadFile(fileToUpload)
+        const filesToUpload = [new File([blob], fileName)]
+        const fileCid = await client.uploadDirectory(filesToUpload)
 
         return fileCid.toString()
     } catch (e) {

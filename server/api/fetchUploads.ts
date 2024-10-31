@@ -16,11 +16,18 @@ export default defineEventHandler(async event => {
                 const ipfsHash = upload.root.toString()
                 const entries = []
                 for await (const entry of fs.ls(CID.parse(ipfsHash))) {
-                    entries.push({ name: entry.name, src: `https://${ipfsHash}.ipfs.w3s.link/${entry.name}` })
+                    entries.push({ name: entry.name, ipfsHash, src: `https://${ipfsHash}.ipfs.w3s.link/${entry.name}` })
                 }
                 return entries
             })
         )
+        if (cid) {
+            results.sort((a, b) => {
+                const aMatch = a.some(entry => entry.ipfsHash === cid)
+                const bMatch = b.some(entry => entry.ipfsHash === cid)
+                return bMatch - aMatch
+            })
+        }
         return results.flat()
     } catch (e) {
         console.error(e)

@@ -66,7 +66,7 @@ def file_checks(request_file):
         return https_fn.Response("File too large", status=400)
 
 
-@https_fn.on_request()
+@https_fn.on_request(cors=options.CorsOptions(cors_origins="*", cors_methods=["post"]))
 def spookmeup(req: https_fn.Request) -> https_fn.Response:
     try:
         request_file = req.files.get('file')
